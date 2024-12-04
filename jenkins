@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Define any environment variables here, if needed
+        PROJECT_NAME = 'your_project_name'
+    }
+    
+    stages {
+        // Stage 1: Build the project
+        stage('Build') {
+            steps {
+                script {
+                    echo 'Building the project...'
+                    // Add the command to build your project, for example:
+                    // sh 'mvn clean install' (for Maven projects)
+                    // sh './gradlew build' (for Gradle projects)
+                }
+            }
+        }
+        
+        // Stage 2: Run tests
+        stage('Test') {
+            steps {
+                script {
+                    echo 'Running tests...'
+                    // Add the command to run your tests, for example:
+                    // sh 'mvn test' (for Maven)
+                    // sh './gradlew test' (for Gradle)
+                }
+            }
+        }
+        
+        // Stage 3: Deploy the project
+        stage('Deploy') {
+            steps {
+                script {
+                    echo 'Deploying the project...'
+                    // Add the command to deploy your project, for example:
+                    // sh './deploy.sh' (custom deployment script)
+                    // sh 'kubectl apply -f deployment.yaml' (for Kubernetes deployment)
+                }
+            }
+        }
+    }
+    
+    post {
+        // Post actions (e.g., clean up, notifications)
+        always {
+            echo 'Pipeline completed.'
+        }
+        
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
